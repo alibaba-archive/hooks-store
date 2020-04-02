@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from '@ice/store';
+import { createStore } from '@ice/store-next';
 
 const delay = (time) => new Promise((resolve) => setTimeout(() => resolve(), time));
 
@@ -8,7 +8,6 @@ const delay = (time) => new Promise((resolve) => setTimeout(() => resolve(), tim
 function useCounter() {
   const [count, setCount] = useState(0);
   const decrement = () => setCount(count - 1);
-  const increment = () => setCount(count + 1);
   const decrementAsync = async () => {
     await delay(1000);
     decrement();
@@ -17,7 +16,6 @@ function useCounter() {
   return {
     count,
     decrement,
-    increment,
     decrementAsync,
   };
 }
@@ -35,18 +33,18 @@ function Button() {
   function getCounter() {
     return getModel('counter');
   }
-  function handleIncrement() {
-    getCounter().increment();
-  }
   function handleDecrementAsync() {
     getCounter().decrementAsync();
+  }
+  function handleDecrement() {
+    getCounter().decrement();
   }
 
   console.log('Render Button.');
   return (
     <>
-      <button type="button" onClick={handleIncrement}>+</button>
-      <button type="button" onClick={handleDecrementAsync}>-</button>
+      <button type="button" onClick={handleDecrement}>-</button>
+      <button type="button" onClick={handleDecrementAsync}>Async-</button>
     </>
   );
 }

@@ -1,6 +1,6 @@
-import { Component } from 'react';
+// import { Component } from 'react';
 // import { Assign } from 'utility-types';
-// import { UseModelValue, ModelEffectsState } from '@ice/store';
+// import { UseModelValue, ModelEffectsState } from '@ice/store-next';
 // import compose from 'lodash/fp/compose';
 // import store from '../store';
 // import { TodoList as TodoListFn } from './TodoList';
