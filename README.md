@@ -66,6 +66,7 @@ const store = createStore(models);
 // 3️⃣ Consume model
 const { useModel, getModel } = store;
 function Button() {
+  // Use getModel that will never trigger a re-render
   function getCounter() {
     return getModel('counter');
   }

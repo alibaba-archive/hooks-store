@@ -4,7 +4,7 @@ import { createStore } from '@ice/store-next';
 
 const delay = (time) => new Promise((resolve) => setTimeout(() => resolve(), time));
 
-// 1️⃣ Use a model to define your store
+// 1️⃣ Create a custom hook as usual
 function useCounter() {
   const [count, setCount] = useState(0);
   const decrement = () => setCount(count - 1);

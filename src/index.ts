@@ -22,5 +22,4 @@ export const createStore = function<M extends Models>(models: M) {
   };
 };
 
-
 export default createStore;

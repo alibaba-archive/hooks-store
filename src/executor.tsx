@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useMemo } from 'react';
 
 interface ExecutorProps {
-  hook: () => any;
+  useValue: () => any;
   onUpdate: (val: any) => void;
   namespace: string;
 }
 
 export default function(props: ExecutorProps) {
-  const { hook, onUpdate, namespace } = props;
+  const { useValue, onUpdate, namespace } = props;
 
   const updateRef = useRef(onUpdate);
   updateRef.current = onUpdate;
@@ -15,7 +15,7 @@ export default function(props: ExecutorProps) {
 
   let data: any;
   try {
-    data = hook();
+    data = useValue();
   } catch (e) {
     console.error(`Invoking '${namespace || 'unknown'}' model failed:`, e);
   }

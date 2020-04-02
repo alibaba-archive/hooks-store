@@ -8,12 +8,12 @@ export default function(context: Context<Dispatcher>, dispatcher: Dispatcher, mo
     return (
       <context.Provider value={dispatcher}>
         {Object.keys(models).map(namespace => {
-          const hook = models[namespace];
+          const useValue = models[namespace];
           return (
             <Executor
               key={namespace}
               namespace={namespace}
-              hook={hook}
+              useValue={useValue}
               onUpdate={(val) => {
                 dispatcher.data[namespace] = val;
                 dispatcher.update(namespace);
