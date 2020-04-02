@@ -1,54 +1,45 @@
-// import { Component } from 'react';
-// import { Assign } from 'utility-types';
-// import { UseModelValue, ModelEffectsState } from '@ice/store-next';
+import { Component } from 'react';
+// import { UseModelValue } from '@ice/store-next';
 // import compose from 'lodash/fp/compose';
-// import store from '../store';
-// import { TodoList as TodoListFn } from './TodoList';
+import store from '../store';
+import { TodoList as TodoListFn } from './TodoList';
 // import todosModel from '../models/todos';
 
-// const { withModel, withModelEffectsState } = store;
+const { withModel } = store;
 
-// interface MapModelToProp {
-//   todos: UseModelValue<typeof todosModel>;
-// }
+interface MapModelToProp {
+  todos: any; // UseModelValue<typeof todosModel>;
+}
 
-// interface MapModelEffectsStateToProp {
-//   todosActionsState: ModelEffectsState<typeof todosModel>;
-// }
+interface CustomProp {
+  title: string;
+}
 
-// interface CustomProp {
-//   title: string;
-// }
+type Props = CustomProp & MapModelToProp;
 
-// type PropsWithModel = Assign<MapModelToProp, MapModelEffectsStateToProp>;
-// type Props = Assign<CustomProp, PropsWithModel>;
+class TodoList extends Component<Props> {
+  onRemove = (index) => {
+    const [, actions] = this.props.todos;
+    actions.remove(index);
+  }
 
-// class TodoList extends Component<Props> {
-//   onRemove = (index) => {
-//     const [, actions] = this.props.todos;
-//     actions.remove(index);
-//   }
+  onToggle = (index) => {
+    const [, actions] = this.props.todos;
+    actions.toggle(index);
+  }
 
-//   onToggle = (index) => {
-//     const [, actions] = this.props.todos;
-//     actions.toggle(index);
-//   }
+  render() {
+    const { title, todos } = this.props;
+    const [ state, , effectsState ] = todos;
+    return TodoListFn({
+      state: { title, dataSource: state, subTitle: 'Class Component' },
+      actions: { toggle: this.onToggle, remove: this.onRemove },
+      effectsState,
+    });
+  }
+}
 
-//   render() {
-//     const { title, todos, todosActionsState } = this.props;
-//     const [ state ] = todos;
-//     const { dataSource } = state;
-//     return TodoListFn({
-//       state: { title, dataSource, subTitle: 'Class Component' },
-//       actions: { toggle: this.onToggle, remove: this.onRemove },
-//       effectsState: todosActionsState,
-//     });
-//   }
-// }
-
-// export default withModelEffectsState('todos')<PropsWithModel, Props>(
-//   withModel('todos')(TodoList),
-// );
+export default withModel('todos')(TodoList);
 
 // functional flavor:
 // export default compose(withModelEffectsState('todos'), withModel('todos'))(TodoList);
