@@ -1,14 +1,23 @@
-import { useContext, createContext } from 'react';
+import { useContext, createContext, Context } from 'react';
 import Dispatcher from './dispatcher';
 
-export default function() {
+export interface UseIcestoreContext<T=any> {
+  (): T;
+}
+
+export interface IcestoreContextContent<T=any> {
+  context: Context<T>,
+  useContext: UseIcestoreContext<T>,
+}
+
+export default function(): IcestoreContextContent {
   const ReactIcestoreContext = createContext(null);
 
   if (process.env.NODE_ENV !== 'production') {
     ReactIcestoreContext.displayName = 'ReactIcestore';
   }
 
-  function useIcestoreContext(): Dispatcher {
+  const useIcestoreContext: UseIcestoreContext = function () {
     const contextValue = useContext(ReactIcestoreContext);
 
     if (process.env.NODE_ENV !== 'production' && !contextValue) {

@@ -38,5 +38,5 @@ export default function useUser() {
     {
       login: loginState,
     },
-  ];
+  ] as const;
 };

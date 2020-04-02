@@ -1,14 +1,12 @@
 import { Component } from 'react';
-// import { UseModelValue } from '@ice/store-next';
-// import compose from 'lodash/fp/compose';
 import store from '../store';
 import { TodoList as TodoListFn } from './TodoList';
-// import todosModel from '../models/todos';
+import todosModel from '../models/todos';
 
 const { withModel } = store;
 
 interface MapModelToProp {
-  todos: any; // UseModelValue<typeof todosModel>;
+  todos: ReturnType<typeof todosModel>;
 }
 
 interface CustomProp {
@@ -39,7 +37,4 @@ class TodoList extends Component<Props> {
   }
 }
 
-export default withModel('todos')(TodoList);
-
-// functional flavor:
-// export default compose(withModelEffectsState('todos'), withModel('todos'))(TodoList);
+export default withModel('todos')<MapModelToProp, Props>(TodoList);

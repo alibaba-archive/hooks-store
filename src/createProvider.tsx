@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { Context } from 'react';
 import Executor from './executor';
 import Dispatcher from './dispatcher';
 import { Models } from './types';
 
-export default function(context: any, dispatcher: Dispatcher, models: Models) {
+export default function(context: Context<Dispatcher>, dispatcher: Dispatcher, models: Models) {
   return ({ children }: { children: React.ReactNode }) => {
     return (
       <context.Provider value={dispatcher}>
@@ -14,7 +14,7 @@ export default function(context: any, dispatcher: Dispatcher, models: Models) {
               key={namespace}
               namespace={namespace}
               hook={hook}
-              onUpdate={(val: any) => {
+              onUpdate={(val) => {
                 dispatcher.data[namespace] = val;
                 dispatcher.update(namespace);
               }}

@@ -6,14 +6,13 @@ import createGetModel from './createGetModel';
 import createWithModel from './createWithModel';
 import { Models } from './types';
 
-export const createStore = function(models: Models) {
+export const createStore = function<M extends Models>(models: M) {
   const { context, useContext } = createContext();
   const dispatcher = new Dispatcher();
-  type IModels = typeof models;
   const Provider = createProvider(context, dispatcher, models);
-  const useModel = createUseModel<IModels>(useContext);
-  const getModel = createGetModel(dispatcher);
-  const withModel = createWithModel<IModels>(useModel);
+  const useModel = createUseModel<M>(useContext);
+  const getModel = createGetModel<M>(dispatcher);
+  const withModel = createWithModel<M>(useModel);
 
   return {
     Provider,

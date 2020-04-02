@@ -8,8 +8,10 @@ export interface Todo {
   done?: boolean;
 }
 
+export type Todos = Todo[];
+
 export default function useTodos() {
-  const [todos, setTodos] = useState<Todo[]>([
+  const [todos, setTodos] = useState<Todos>([
     {
       name: 'Init',
       done: false,
@@ -77,5 +79,5 @@ export default function useTodos() {
       refresh: refreshState,
       remove: removeState,
     },
-  ];
+  ] as const;
 };
