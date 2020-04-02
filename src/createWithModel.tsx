@@ -21,5 +21,5 @@ export default function<Ms extends Models = Models>(useModel) {
         );
       };
     };
-  }
+  };
 }

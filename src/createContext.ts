@@ -6,8 +6,8 @@ export interface UseIcestoreContext<T=any> {
 }
 
 export interface IcestoreContextContent<T=any> {
-  context: Context<T>,
-  useContext: UseIcestoreContext<T>,
+  context: Context<T>;
+  useContext: UseIcestoreContext<T>;
 }
 
 export default function(): IcestoreContextContent {
@@ -27,7 +27,7 @@ export default function(): IcestoreContextContent {
     }
 
     return contextValue as Dispatcher;
-  }
+  };
 
   return {
     context: ReactIcestoreContext,
