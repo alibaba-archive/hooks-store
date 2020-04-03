@@ -1,5 +1,7 @@
 [English](./README.md) | 简体中文
 
+> 注意：icestore-next 依然处于实验阶段，请不要将它应用于生产环境！！！
+
 # icestore-next
 
 > 基于 React Hooks 的轻量级状态管理框架。

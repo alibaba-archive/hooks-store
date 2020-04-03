@@ -1,6 +1,6 @@
 {
   "name": "@ice/store-next",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Lightweight React state management library based on React Hooks.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

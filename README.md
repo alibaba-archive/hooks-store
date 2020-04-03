@@ -1,5 +1,7 @@
 English | [简体中文](./README.zh-CN.md)
 
+> Notice: icestore-next is still in the experimental stage, please do not use it in the production environment!!!
+
 # icestore-next
 
 > Lightweight React state management library based on React Hooks.
