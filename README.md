@@ -80,10 +80,10 @@ function Button() {
     getCounter().decrement();
   }
   return (
-    <>
+    <div>
       <button type="button" onClick={handleDecrement}>-</button>
       <button type="button" onClick={handleDecrementAsync}>Async-</button>
-    </>
+    </div>
   );
 }
 function Count() {
