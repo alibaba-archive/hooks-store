@@ -41,21 +41,14 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { createStore } from '@ice/store-next';
 
-const delay = (time) => new Promise((resolve) => setTimeout(() => resolve(), time));
-
 // 1️⃣ Create a custom hook as usual
 function useCounter() {
   const [count, setCount] = useState(0);
-  const decrement = () => setCount(count - 1);
-  const decrementAsync = async () => {
-    await delay(1000);
-    decrement();
-  };
+  const increment = () => setCount(count + 1);
 
   return {
     count,
-    decrement,
-    decrementAsync,
+    increment,
   };
 }
 
@@ -69,21 +62,15 @@ const store = createStore(models);
 // 3️⃣ Consume model
 const { useModel, getModel } = store;
 function Button() {
-  // Use getModel that will never trigger a re-render
-  function getCounter() {
-    return getModel('counter');
-  }
-  function handleDecrementAsync() {
-    getCounter().decrementAsync();
-  }
-  function handleDecrement() {
-    getCounter().decrement();
+  function handleIncrement() {
+
+    // Use getModel that will never trigger a re-render
+    getModel('counter')().increment();
   }
   return (
-    <div>
-      <button type="button" onClick={handleDecrement}>-</button>
-      <button type="button" onClick={handleDecrementAsync}>Async-</button>
-    </div>
+    <button type="button" onClick={handleIncrement}>
+      +
+    </button>
   );
 }
 function Count() {
@@ -104,7 +91,6 @@ function App() {
 
 const rootElement = document.getElementById('root');
 ReactDOM.render(<App />, rootElement);
-
 ```
 
 ## Installation

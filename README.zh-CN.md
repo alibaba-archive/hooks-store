@@ -41,21 +41,14 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { createStore } from '@ice/store-next';
 
-const delay = (time) => new Promise((resolve) => setTimeout(() => resolve(), time));
-
 // 1️⃣ 通过自定义 Hooks 定义模型
 function useCounter() {
   const [count, setCount] = useState(0);
-  const decrement = () => setCount(count - 1);
-  const decrementAsync = async () => {
-    await delay(1000);
-    decrement();
-  };
+  const increment = () => setCount(count + 1);
 
   return {
     count,
-    decrement,
-    decrementAsync,
+    increment,
   };
 }
 
@@ -69,21 +62,15 @@ const store = createStore(models);
 // 3️⃣ 消费模型
 const { useModel, getModel } = store;
 function Button() {
-  // 通过 getModel 方法可以获取到模型的最新状态，并且不为组件订阅其更新
-  function getCounter() {
-    return getModel('counter');
-  }
-  function handleDecrementAsync() {
-    getCounter().decrementAsync();
-  }
-  function handleDecrement() {
-    getCounter().decrement();
+  function handleIncrement() {
+  
+    // 通过 getModel 方法可以获取到模型的最新状态，并且不为组件订阅其更新
+    getModel('counter')().increment();
   }
   return (
-    <div>
-      <button type="button" onClick={handleDecrement}>-</button>
-      <button type="button" onClick={handleDecrementAsync}>Async-</button>
-    </div>
+    <button type="button" onClick={handleIncrement}>
+      +
+    </button>
   );
 }
 function Count() {
@@ -104,7 +91,6 @@ function App() {
 
 const rootElement = document.getElementById('root');
 ReactDOM.render(<App />, rootElement);
-
 ```
 
 ## 安装
