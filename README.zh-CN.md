@@ -32,7 +32,7 @@
 * **最小和熟悉的 API**: 没有额外的学习成本，只需要了解 React Hooks；
 * **中心化**: 很方便地进行数据初始化和状态联动；
 * **状态只读 API**: 支持只读模型的状态而不订阅状态的更新；
-* **良好的兼容性**: Class 组件兼容和良好的 TypeScript 类型检查和推断。
+* **良好的兼容性**: 类组件兼容和良好的 TypeScript 类型检查和推断。
 
 ## 快速开始
 
@@ -60,17 +60,11 @@ const models = {
 const store = createStore(models);
 
 // 3️⃣ 消费模型
-const { useModel, getModel } = store;
+const { useModel } = store;
 function Button() {
-  function handleIncrement() {
-  
-    // 通过 getModel 方法可以获取到模型的最新状态，并且不为组件订阅其更新
-    getModel('counter')().increment();
-  }
+  const { increment } = useModel('counter');
   return (
-    <button type="button" onClick={handleIncrement}>
-      +
-    </button>
+    <button type="button" onClick={increment}> + </button>
   );
 }
 function Count() {
@@ -99,6 +93,128 @@ ReactDOM.render(<App />, rootElement);
 
 ```bash
 npm install @ice/store-next --save
+```
+
+## 进阶用法
+
+### 只读不订阅更新
+
+在某些场景下，您可能只希望调用模型返回的方法更新状态而不订阅模型状态的更新。
+例如「快速开始」示例中的 Button 组件，您没有在组件中消费模型的状态，因此可能不期望模型状态的变化触发组件的重新渲染。
+这时候您可以使用 `getModel` API，看下面的示例，可以与上面的示例进行比较：
+
+```jsx
+const { getModel } = store;
+function Button() {
+  function handleIncrement() {
+    getModel('counter').increment();
+  }
+  return (
+    <button type="button" onClick={handleIncrement}> + </button>
+  );
+}
+```
+
+### 模型联动
+
+在某些场景下，您可能期望 A 模型的某个状态的变更触发 B 模型某个状态的更新。我们把这种行为称为「模型联动」。
+例如下面的场景：
+
+- 我们有一个 todos 模型，模型记录了所有的任务列表。
+- 我们有一个 user 模型，模型中有一个 todos 字段，记录了当前用户拥有的任务数。
+- 每当 todos 模型的任务列表发生了变更，用户持有的任务数就需要保持同步。
+
+#### 方式一：状态订阅
+
+```js
+import { useEffect, useState } from 'react';
+import produce from 'immer';
+import '@/store';
+
+function useUser() {
+  const [state, setState] = useState({ todos: 0 });
+  const [todos] = store.useModel('todos');
+
+  useEffect(() => {
+    setState(produce((draft) => {
+      draft.todos = todos.length;
+    }));
+  }, [ todos ]);
+
+  return [state, setState];
+}
+```
+
+#### 方式二：方法调用
+
+```js
+import { useState } from 'react';
+import produce from 'immer';
+import '@/store';
+
+function useTodos() {
+  const [state, setState] = useState([
+    {
+      name: 'angular',
+    },
+  ]);
+
+  function setTodos(todos) {
+    setState(todos);
+
+    const [, setUser] = store.getModel('user');
+    setUser(produce((draft) => {
+      draft.todos = todos.length;
+    }));
+  }
+ 
+  return [state, { setTodos }];
+}
+```
+
+### 在类组件中使用
+
+虽然模型是通过自定义 Hooks 定义的，但您仍然可以在类组件中获取和订阅模型：
+
+```tsx
+import { Component } from 'react';
+import store from '@/store';
+import useTodos from '@/models/todos';
+
+const { withModel } = store;
+
+interface MapModelToProp {
+  todos: ReturnType<typeof useTodos>; // 这个字段是 withModel 自动添加的
+}
+
+interface CustomProp {
+  title: string; // 用户自定义的 props
+}
+
+type Props = CustomProp & MapModelToProp;
+
+class Todos extends Component<Props> {
+  render() {
+    const { title, todos } = this.props;
+    const [ state, actions ] = todos;
+    return (
+      <div>
+        {
+          state.map(({ name }, index) => {
+            return (<div key={index}>
+              {name}
+              <button onClick={() => actions.remove(index)}>
+                删除
+              </button>
+            </div>);
+          })
+        }
+      </div>
+    );
+  }
+}
+
+export default withModel('todos')<MapModelToProp, Props>(Todos);
 ```
 
 ## 浏览器兼容

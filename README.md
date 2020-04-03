@@ -60,17 +60,11 @@ const models = {
 const store = createStore(models);
 
 // 3️⃣ Consume model
-const { useModel, getModel } = store;
+const { useModel } = store;
 function Button() {
-  function handleIncrement() {
-
-    // Use getModel that will never trigger a re-render
-    getModel('counter')().increment();
-  }
+  const { increment } = useModel('counter');
   return (
-    <button type="button" onClick={handleIncrement}>
-      +
-    </button>
+    <button type="button" onClick={increment}> + </button>
   );
 }
 function Count() {
@@ -99,6 +93,128 @@ icestore requires React 16.8.0 or later.
 
 ```bash
 npm install @ice/store-next --save
+```
+
+## Advanced Usages
+
+### ReadyOnly
+
+In some scenarios, you may only want to call the method returned by the model to update the state instead of subscribing to the update of the model state.
+For example, the button component in the "Basic example", you do not consume the state of the model in the component, so you may not expect the change of the state of the model to trigger the re-rende of the component.
+
+At this time, you can use the `getmodel` API, check following example and compare them with the above example:
+
+```jsx
+const { getModel } = store;
+function Button() {
+  function handleIncrement() {
+    getModel('counter').increment();
+  }
+  return (
+    <button type="button" onClick={handleIncrement}> + </button>
+  );
+}
+```
+
+### Model Interaction
+
+In some scenarios, you might expect a state change of model A to trigger a state update of model B. We call this behavior as "Model Interaction".
+
+For example:
+
+- We have a todos model that records all tasks.
+- We have a user model, in which there is a todos field, which records the number of tasks owned by the current user.
+- Whenever the todos model's tasks changes, the number of tasks held by users needs to be kept in sync.
+
+#### State subscription
+
+```js
+import { useEffect, useState } from 'react';
+import produce from 'immer';
+import '@/store';
+
+function useUser() {
+  const [state, setState] = useState({ todos: 0 });
+  const [todos] = store.useModel('todos');
+
+  useEffect(() => {
+    setState(produce((draft) => {
+      draft.todos = todos.length;
+    }));
+  }, [ todos ]);
+
+  return [state, setState];
+}
+```
+
+#### Method Call
+
+```js
+import { useState } from 'react';
+import produce from 'immer';
+import '@/store';
+
+function useTodos() {
+  const [state, setState] = useState([
+    {
+      name: 'angular',
+    },
+  ]);
+
+  function setTodos(todos) {
+    setState(todos);
+
+    const [, setUser] = store.getModel('user');
+    setUser(produce((draft) => {
+      draft.todos = todos.length;
+    }));
+  }
+ 
+  return [state, { setTodos }];
+}
+```
+
+### Class Component Support
+
+```tsx
+import { Component } from 'react';
+import store from '@/store';
+import useTodos from '@/models/todos';
+
+const { withModel } = store;
+
+interface MapModelToProp {
+  todos: ReturnType<typeof useTodos>; // This field is automatically added by withModel
+}
+
+interface CustomProp {
+  title: string; // User defined props
+}
+
+type Props = CustomProp & MapModelToProp;
+
+class Todos extends Component<Props> {
+  render() {
+    const { title, todos } = this.props;
+    const [ state, actions ] = todos;
+    return (
+      <div>
+        {
+          state.map(({ name }, index) => {
+            return (<div key={index}>
+              {name}
+              <button onClick={() => actions.remove(index)}>
+                Remove
+              </button>
+            </div>);
+          })
+        }
+      </div>
+    );
+  }
+}
+
+export default withModel('todos')<MapModelToProp, Props>(Todos);
 ```
 
 ## Browser Compatibility

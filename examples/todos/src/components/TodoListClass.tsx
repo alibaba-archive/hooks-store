@@ -1,12 +1,12 @@
 import { Component } from 'react';
 import store from '../store';
 import { TodoList as TodoListFn } from './TodoList';
-import todosModel from '../models/todos';
+import useTodos from '../models/todos';
 
 const { withModel } = store;
 
 interface MapModelToProp {
-  todos: ReturnType<typeof todosModel>;
+  todos: ReturnType<typeof useTodos>;
 }
 
 interface CustomProp {
