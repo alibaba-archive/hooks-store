@@ -1,8 +1,8 @@
-English | [简体中文](./README.zh-CN.md)
+[English](./README.md) | 简体中文
 
 # icestore-next
 
-> Lightweight React state management library based on React Hooks.
+> 基于 React Hooks 的轻量级状态管理框架。
 
 [![NPM version](https://img.shields.io/npm/v/@ice/store-next.svg?style=flat)](https://npmjs.org/package/@ice/store-next)
 [![Package Quality](https://npm.packagequality.com/shield/@ice%2Fstore.svg)](https://packagequality.com/#?package=@ice/store-next)
@@ -25,16 +25,16 @@ English | [简体中文](./README.zh-CN.md)
   </tbody>
 </table>
 
-## Introduction
+## 简介
 
-`icestore-next` is a lightweight React state management library based on hooks. It has the following core features:
+`icestore-next` 是基于 React Hooks 实现的轻量级状态管理框架，具有以下特征：
 
-* **Minimal & Familiar API**: No additional learning costs, easy to get started with the knowledge of React Hooks.
-* **Centralization**: Easy to initialize data and support model interaction.
-* **Readonly API**: Supports read-only state without subscribing to updates.
-* **Great Compatibility**: Class Component Support && Perfect TypeScript Support.
+* **最小和熟悉的 API**: 没有额外的学习成本，只需要了解 React Hooks；
+* **中心化**: 很方便地进行数据初始化和状态联动；
+* **状态只读 API**: 支持只读模型的状态而不订阅状态的更新；
+* **良好的兼容性**: Class 组件兼容和良好的 TypeScript 类型检查和推断。
 
-## Basic example
+## 快速开始
 
 ```jsx
 import React, { useState } from 'react';
@@ -43,7 +43,7 @@ import { createStore } from '@ice/store-next';
 
 const delay = (time) => new Promise((resolve) => setTimeout(() => resolve(), time));
 
-// 1️⃣ Create a custom hook as usual
+// 1️⃣ 通过自定义 Hooks 定义模型
 function useCounter() {
   const [count, setCount] = useState(0);
   const decrement = () => setCount(count - 1);
@@ -63,13 +63,13 @@ const models = {
   counter: useCounter,
 };
 
-// 2️⃣ Create the store
+// 2️⃣ 创建 Stroe
 const store = createStore(models);
 
-// 3️⃣ Consume model
+// 3️⃣ 消费模型
 const { useModel, getModel } = store;
 function Button() {
-  // Use getModel that will never trigger a re-render
+  // 通过 getModel 方法可以获取到模型的最新状态，并且不为组件订阅其更新
   function getCounter() {
     return getModel('counter');
   }
@@ -91,7 +91,7 @@ function Count() {
   return (<span>{count}</span>);
 }
 
-// 4️⃣ Wrap your components with Provider
+// 4️⃣ 通过 Provider 绑定 Stroe 到视图
 const { Provider } = store;
 function App() {
   return (
@@ -107,29 +107,29 @@ ReactDOM.render(<App />, rootElement);
 
 ```
 
-## Installation
+## 安装
 
-icestore requires React 16.8.0 or later.
+使用 icestore 需要 React 在 16.8.0 版本以上。
 
 ```bash
 npm install @ice/store-next --save
 ```
 
-## Browser Compatibility
+## 浏览器兼容
 
 | ![Chrome](https://raw.github.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png) | ![Firefox](https://raw.github.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png) | ![Edge](https://raw.github.com/alrra/browser-logos/master/src/edge/edge_48x48.png) | ![IE](https://raw.github.com/alrra/browser-logos/master/src/archive/internet-explorer_9-11/internet-explorer_9-11_48x48.png) | ![Safari](https://raw.github.com/alrra/browser-logos/master/src/safari/safari_48x48.png) | ![Opera](https://raw.github.com/alrra/browser-logos/master/src/opera/opera_48x48.png) | ![UC](https://raw.github.com/alrra/browser-logos/master/src/uc/uc_48x48.png) |
 | :--------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------: | :--------------------------------------------------------------------------: |
 |✔ |✔|✔|9+ ✔|✔|✔|✔|
 
-## Contributors
+## 参与贡献
 
-Feel free to report any questions as an [issue](https://github.com/alibaba/ice/issues/new), we'd love to have your helping hand on icestore.
+欢迎通过 [issue](https://github.com/alibaba/ice/issues/new) 反馈问题。
 
-If you're interested in icestore, see [CONTRIBUTING.md](https://github.com/alibaba/ice/blob/master/.github/CONTRIBUTING.md) for more information to learn how to get started.
+如果对 `icestore` 感兴趣，请参考 [CONTRIBUTING.md](https://github.com/alibaba/ice/blob/master/.github/CONTRIBUTING.md) 学习如何贡献代码。
 
-## Community
+## 社区
 
-| DingTalk community                               | GitHub issues |  Gitter |
+| 钉钉群	                             | GitHub issues |  Gitter |
 |-------------------------------------|--------------|---------|
 | <a href="https://ice.alicdn.com/assets/images/qrcode.png"><img src="https://ice.alicdn.com/assets/images/qrcode.png" width="150" /></a> | [issues]     | [gitter]|
 
