@@ -97,7 +97,7 @@ npm install @ice/store-next --save
 
 ## Advanced Usages
 
-### ReadyOnly
+### Readonly
 
 In some scenarios, you may only want to call the method returned by the model to update the state instead of subscribing to the update of the model state.
 For example, the button component in the "Basic example", you do not consume the state of the model in the component, so you may not expect the change of the state of the model to trigger the re-rende of the component.
