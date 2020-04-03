@@ -28,8 +28,9 @@
 `icestore-next` is a lightweight React state management library based on hooks. It has the following core features:
 
 * **Minimal & Familiar API**: No additional learning costs, easy to get started with the knowledge of React Hooks.
-* **Class Component Support**: Make old projects enjoying the fun of lightweight state management with friendly compatibility strategy.
-* **TypeScript Support**: Provide complete type definitions to support intelliSense in VS Code.
+* **Readonly API**: Supports read-only state without subscribing to updates.
+* **Centralization**: Easy to initialize data and support model interaction.
+* **Good Compatibility**: Class Component Support && Perfect TypeScript Support.
 
 ## Basic example
 
@@ -40,7 +41,7 @@ import { createStore } from '@ice/store-next';
 
 const delay = (time) => new Promise((resolve) => setTimeout(() => resolve(), time));
 
-// 1️⃣ Use a model to define your store
+// 1️⃣ Create a custom hook as usual
 function useCounter() {
   const [count, setCount] = useState(0);
   const decrement = () => setCount(count - 1);
