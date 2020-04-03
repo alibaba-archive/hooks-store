@@ -1,10 +1,10 @@
-English | [简体中文](./README.zh-CN.md)
+[English](./README.md) | 简体中文
 
-> Notice: icestore-next is still in the experimental stage, please do not use it in the production environment!!!
+> 注意：icestore-next 依然处于实验阶段，请不要将它应用于生产环境！！！
 
 # icestore-next
 
-> Lightweight React state management library based on React Hooks.
+> 基于 React Hooks 的轻量级状态管理框架。
 
 [![NPM version](https://img.shields.io/npm/v/@ice/store-next.svg?style=flat)](https://npmjs.org/package/@ice/store-next)
 [![Package Quality](https://npm.packagequality.com/shield/@ice%2Fstore.svg)](https://packagequality.com/#?package=@ice/store-next)
@@ -27,23 +27,23 @@ English | [简体中文](./README.zh-CN.md)
   </tbody>
 </table>
 
-## Introduction
+## 简介
 
-`icestore-next` is a lightweight React state management library based on hooks. It has the following core features:
+`icestore-next` 是基于 React Hooks 实现的轻量级状态管理框架，具有以下特征：
 
-* **Minimal & Familiar API**: No additional learning costs, easy to get started with the knowledge of React Hooks.
-* **Centralization**: Easy to initialize data and support model interaction.
-* **Readonly API**: Supports read-only state without subscribing to updates.
-* **Great Compatibility**: Class Component Support && Perfect TypeScript Support.
+* **最小和熟悉的 API**: 没有额外的学习成本，只需要了解 React Hooks；
+* **中心化**: 很方便地进行数据初始化和状态联动；
+* **状态只读 API**: 支持只读模型的状态而不订阅状态的更新；
+* **良好的兼容性**: 类组件兼容和良好的 TypeScript 类型检查和推断。
 
-## Basic example
+## 快速开始
 
 ```jsx
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { createStore } from '@ice/store-next';
 
-// 1️⃣ Create a custom hook as usual
+// 1️⃣ 通过自定义 Hooks 定义模型
 function useCounter() {
   const [count, setCount] = useState(0);
   const increment = () => setCount(count + 1);
@@ -58,10 +58,10 @@ const models = {
   counter: useCounter,
 };
 
-// 2️⃣ Create the store
+// 2️⃣ 创建 Stroe
 const store = createStore(models);
 
-// 3️⃣ Consume model
+// 3️⃣ 消费模型
 const { useModel } = store;
 function Button() {
   const { increment } = useModel('counter');
@@ -74,7 +74,7 @@ function Count() {
   return (<span>{count}</span>);
 }
 
-// 4️⃣ Wrap your components with Provider
+// 4️⃣ 通过 Provider 绑定 Stroe 到视图
 const { Provider } = store;
 function App() {
   return (
@@ -89,22 +89,21 @@ const rootElement = document.getElementById('root');
 ReactDOM.render(<App />, rootElement);
 ```
 
-## Installation
+## 安装
 
-icestore requires React 16.8.0 or later.
+使用 icestore 需要 React 在 16.8.0 版本以上。
 
 ```bash
 npm install @ice/store-next --save
 ```
 
-## Advanced Usages
+## 进阶用法
 
-### Readonly
+### 只读不订阅更新
 
-In some scenarios, you may only want to call the method returned by the model to update the state instead of subscribing to the update of the model state.
-For example, the button component in the "Basic example", you do not consume the state of the model in the component, so you may not expect the change of the state of the model to trigger the re-rende of the component.
-
-At this time, you can use the `getmodel` API, check following example and compare them with the above example:
+在某些场景下，您可能只希望调用模型返回的方法更新状态而不订阅模型状态的更新。
+例如「快速开始」示例中的 Button 组件，您没有在组件中消费模型的状态，因此可能不期望模型状态的变化触发组件的重新渲染。
+这时候您可以使用 `getModel` API，看下面的示例，可以与上面的示例进行比较：
 
 ```jsx
 const { getModel } = store;
@@ -118,17 +117,16 @@ function Button() {
 }
 ```
 
-### Model Interaction
+### 模型联动
 
-In some scenarios, you might expect a state change of model A to trigger a state update of model B. We call this behavior as "Model Interaction".
+在某些场景下，您可能期望 A 模型的某个状态的变更触发 B 模型某个状态的更新。我们把这种行为称为「模型联动」。
+例如下面的场景：
 
-For example:
+- 我们有一个 todos 模型，模型记录了所有的任务列表。
+- 我们有一个 user 模型，模型中有一个 todos 字段，记录了当前用户拥有的任务数。
+- 每当 todos 模型的任务列表发生了变更，用户持有的任务数就需要保持同步。
 
-- We have a todos model that records all tasks.
-- We have a user model, in which there is a todos field, which records the number of tasks owned by the current user.
-- Whenever the todos model's tasks changes, the number of tasks held by users needs to be kept in sync.
-
-#### State subscription
+#### 方式一：状态订阅
 
 ```js
 import { useEffect, useState } from 'react';
@@ -149,7 +147,7 @@ function useUser() {
 }
 ```
 
-#### Method Call
+#### 方式二：方法调用
 
 ```js
 import { useState } from 'react';
@@ -176,7 +174,9 @@ function useTodos() {
 }
 ```
 
-### Class Component Support
+### 在类组件中使用
+
+虽然模型是通过自定义 Hooks 定义的，但您仍然可以在类组件中获取和订阅模型：
 
 ```tsx
 import { Component } from 'react';
@@ -186,11 +186,11 @@ import useTodos from '@/models/todos';
 const { withModel } = store;
 
 interface MapModelToProp {
-  todos: ReturnType<typeof useTodos>; // This field is automatically added by withModel
+  todos: ReturnType<typeof useTodos>; // 这个字段是 withModel 自动添加的
 }
 
 interface CustomProp {
-  title: string; // User defined props
+  title: string; // 用户自定义的 props
 }
 
 type Props = CustomProp & MapModelToProp;
@@ -206,7 +206,7 @@ class Todos extends Component<Props> {
             return (<div key={index}>
               {name}
               <button onClick={() => actions.remove(index)}>
-                Remove
+                删除
               </button>
             </div>);
           })
@@ -219,21 +219,21 @@ class Todos extends Component<Props> {
 export default withModel('todos')<MapModelToProp, Props>(Todos);
 ```
 
-## Browser Compatibility
+## 浏览器兼容
 
 | ![Chrome](https://raw.github.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png) | ![Firefox](https://raw.github.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png) | ![Edge](https://raw.github.com/alrra/browser-logos/master/src/edge/edge_48x48.png) | ![IE](https://raw.github.com/alrra/browser-logos/master/src/archive/internet-explorer_9-11/internet-explorer_9-11_48x48.png) | ![Safari](https://raw.github.com/alrra/browser-logos/master/src/safari/safari_48x48.png) | ![Opera](https://raw.github.com/alrra/browser-logos/master/src/opera/opera_48x48.png) | ![UC](https://raw.github.com/alrra/browser-logos/master/src/uc/uc_48x48.png) |
 | :--------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------: | :--------------------------------------------------------------------------: |
 |✔ |✔|✔|9+ ✔|✔|✔|✔|
 
-## Contributors
+## 参与贡献
 
-Feel free to report any questions as an [issue](https://github.com/alibaba/ice/issues/new), we'd love to have your helping hand on icestore.
+欢迎通过 [issue](https://github.com/alibaba/ice/issues/new) 反馈问题。
 
-If you're interested in icestore, see [CONTRIBUTING.md](https://github.com/alibaba/ice/blob/master/.github/CONTRIBUTING.md) for more information to learn how to get started.
+如果对 `icestore` 感兴趣，请参考 [CONTRIBUTING.md](https://github.com/alibaba/ice/blob/master/.github/CONTRIBUTING.md) 学习如何贡献代码。
 
-## Community
+## 社区
 
-| DingTalk community                               | GitHub issues |  Gitter |
+| 钉钉群	                             | GitHub issues |  Gitter |
 |-------------------------------------|--------------|---------|
 | <a href="https://ice.alicdn.com/assets/images/qrcode.png"><img src="https://ice.alicdn.com/assets/images/qrcode.png" width="150" /></a> | [issues]     | [gitter]|
 
