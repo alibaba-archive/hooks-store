@@ -1,5 +1,4 @@
 import { useContext, createContext, Context } from 'react';
-import Dispatcher from './dispatcher';
 
 export interface UseIcestoreContext<T=any> {
   (): T;
@@ -10,7 +9,7 @@ export interface IcestoreContextContent<T=any> {
   useContext: UseIcestoreContext<T>;
 }
 
-export default function(): IcestoreContextContent {
+export default function<T>(): IcestoreContextContent<T> {
   const ReactIcestoreContext = createContext(null);
 
   if (process.env.NODE_ENV !== 'production') {
@@ -26,7 +25,7 @@ export default function(): IcestoreContextContent {
       );
     }
 
-    return contextValue as Dispatcher;
+    return contextValue;
   };
 
   return {

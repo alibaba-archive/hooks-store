@@ -7,8 +7,8 @@ import createWithModel from './createWithModel';
 import { Models } from './types';
 
 export const createStore = function<M extends Models>(models: M) {
-  const { context, useContext } = createContext();
   const dispatcher = new Dispatcher();
+  const { context, useContext } = createContext<Dispatcher>();
   const Provider = createProvider(context, dispatcher, models);
   const useModel = createUseModel<M>(useContext);
   const getModel = createGetModel<M>(dispatcher);
