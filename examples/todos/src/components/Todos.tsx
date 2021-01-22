@@ -3,10 +3,10 @@ import store from '../store';
 import TodoList from './TodoListClass';
 // import TodoList from './TodoList';
 
-const { useModel } = store;
+const { useHooks } = store;
 
 export default function Todos() {
-  const [ dataSource, actions, effectsState ] = useModel('todos');
+  const [ dataSource, actions, effectsState ] = useHooks('useTodos');
   const { refresh } = actions;
 
   useEffect(() => {

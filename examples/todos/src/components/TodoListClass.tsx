@@ -1,11 +1,11 @@
 import { Component } from 'react';
 import store from '../store';
 import { TodoList as TodoListFn } from './TodoList';
-import useTodos from '../models/todos';
+import useTodos from '../hooks/useTodos';
 
-const { withModel } = store;
+const { withHooks } = store;
 
-interface MapModelToProp {
+interface MapHooksToProp {
   todos: ReturnType<typeof useTodos>;
 }
 
@@ -13,7 +13,7 @@ interface CustomProp {
   title: string;
 }
 
-type Props = CustomProp & MapModelToProp;
+type Props = CustomProp & MapHooksToProp;
 
 class TodoList extends Component<Props> {
   onRemove = (index) => {
@@ -37,4 +37,4 @@ class TodoList extends Component<Props> {
   }
 }
 
-export default withModel('todos')<MapModelToProp, Props>(TodoList);
+export default withHooks('useTodos')<MapHooksToProp, Props>(TodoList);

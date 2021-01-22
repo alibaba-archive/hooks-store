@@ -1,5 +1,5 @@
 /**
- * This model only defines state, but not actions
+ * This hooks only defines state, but not actions
  */
 import { useState } from 'react';
 

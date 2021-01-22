@@ -1,5 +1,5 @@
 
 import createStore from '@ice/hooks-store';
-import * as models from './models';
+import * as hooks from './hooks';
 
-export default createStore(models);
+export default createStore(hooks);

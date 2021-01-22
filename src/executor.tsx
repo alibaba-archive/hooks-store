@@ -17,7 +17,7 @@ export default function(props: ExecutorProps) {
   try {
     data = useValue();
   } catch (e) {
-    console.error(`Invoking '${namespace || 'unknown'}' model failed:`, e);
+    console.error(`Invoking '${namespace || 'unknown'}' hooks failed:`, e);
   }
 
   useMemo(() => {

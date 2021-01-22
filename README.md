@@ -30,7 +30,7 @@ English | [简体中文](./README.zh-CN.md)
 `hooks-store` is a lightweight React state management library based on hooks. It has the following core features:
 
 * **Minimal & Familiar API**: No additional learning costs, easy to get started with the knowledge of React Hooks.
-* **Centralization**: Easy to initialize data and support model interaction.
+* **Centralization**: Easy to initialize data and support hooks interaction.
 * **Readonly API**: Supports read-only state without subscribing to updates.
 * **Great Compatibility**: Class Component Support && Perfect TypeScript Support.
 
@@ -52,23 +52,23 @@ function useCounter() {
   };
 }
 
-const models = {
-  counter: useCounter,
+const hooks = {
+  useCounter,
 };
 
 // 2️⃣ Create the store
-const store = createStore(models);
+const store = createStore(hooks);
 
-// 3️⃣ Consume model
-const { useModel } = store;
+// 3️⃣ Consume hooks
+const { useHooks } = store;
 function Button() {
-  const { increment } = useModel('counter');
+  const { increment } = useHooks('useCounter');
   return (
     <button type="button" onClick={increment}> + </button>
   );
 }
 function Count() {
-  const { count } = useModel('counter');
+  const { count } = useHooks('useCounter');
   return (<span>{count}</span>);
 }
 
@@ -99,16 +99,16 @@ npm install @ice/hooks-store --save
 
 ### Readonly
 
-In some scenarios, you may only want to call the method returned by the model to update the state instead of subscribing to the update of the model state.
-For example, the button component in the "Basic example", you do not consume the state of the model in the component, so you may not expect the change of the state of the model to trigger the re-rende of the component.
+In some scenarios, you may only want to call the method returned by the hooks to update the state instead of subscribing to the update of the hooks state.
+For example, the button component in the "Basic example", you do not consume the state of the hooks in the component, so you may not expect the change of the state of the hooks to trigger the re-render of the component.
 
-At this time, you can use the `getmodel` API, check following example and compare them with the above example:
+At this time, you can use the `getHooks` API, check following example and compare them with the above example:
 
 ```jsx
-const { getModel } = store;
+const { getHooks } = store;
 function Button() {
   function handleIncrement() {
-    getModel('counter').increment();
+    getHooks('useCounter').increment();
   }
   return (
     <button type="button" onClick={handleIncrement}> + </button>
@@ -116,15 +116,15 @@ function Button() {
 }
 ```
 
-### Model Interaction
+### Hooks Interaction
 
-In some scenarios, you might expect a state change of model A to trigger a state update of model B. We call this behavior as "Model Interaction".
+In some scenarios, you might expect a state change of Hooks A to trigger a state update of Hooks B. We call this behavior as "Hooks Interaction".
 
 For example:
 
-- We have a todos model that records all tasks.
-- We have a user model, in which there is a todos field, which records the number of tasks owned by the current user.
-- Whenever the todos model's tasks changes, the number of tasks held by users needs to be kept in sync.
+- We have a useTodos Hooks that records all tasks.
+- We have a useUser Hooks, in which there is a todos field, which records the number of tasks owned by the current user.
+- Whenever the todos Hooks's tasks changes, the number of tasks held by users needs to be kept in sync.
 
 #### State subscription
 
@@ -135,7 +135,7 @@ import '@/store';
 
 function useUser() {
   const [state, setState] = useState({ todos: 0 });
-  const [todos] = store.useModel('todos');
+  const [todos] = store.useHooks('useTodos');
 
   useEffect(() => {
     setState(produce((draft) => {
@@ -164,7 +164,7 @@ function useTodos() {
   function setTodos(todos) {
     setState(todos);
 
-    const [, setUser] = store.getModel('user');
+    const [, setUser] = store.getHooks('useUser');
     setUser(produce((draft) => {
       draft.todos = todos.length;
     }));
@@ -179,19 +179,19 @@ function useTodos() {
 ```tsx
 import { Component } from 'react';
 import store from '@/store';
-import useTodos from '@/models/todos';
+import useTodos from '@/hooks/useTodos';
 
-const { withModel } = store;
+const { withHooks } = store;
 
-interface MapModelToProp {
-  todos: ReturnType<typeof useTodos>; // This field is automatically added by withModel
+interface MapHooksToProp {
+  todos: ReturnType<typeof useTodos>; // This field is automatically added by withHooks
 }
 
 interface CustomProp {
   title: string; // User defined props
 }
 
-type Props = CustomProp & MapModelToProp;
+type Props = CustomProp & MapHooksToProp;
 
 class Todos extends Component<Props> {
   render() {
@@ -214,7 +214,7 @@ class Todos extends Component<Props> {
   }
 }
 
-export default withModel('todos')<MapModelToProp, Props>(Todos);
+export default withHooks('useTodos')<MapHooksToProp, Props>(Todos);
 ```
 
 ## Browser Compatibility

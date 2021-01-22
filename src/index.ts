@@ -1,24 +1,24 @@
 import Dispatcher from './dispatcher';
 import createContext from './createContext';
 import createProvider from './createProvider';
-import createUseModel from './createUseModel';
-import createGetModel from './createGetModel';
-import createWithModel from './createWithModel';
-import { Models } from './types';
+import createUseHooks from './createUseHooks';
+import createGetHooks from './createGetHooks';
+import createWithHooks from './createWithHooks';
+import { Hooks } from './types';
 
-export const createStore = function<M extends Models>(models: M) {
+export const createStore = function<H extends Hooks>(hooks: H) {
   const dispatcher = new Dispatcher();
   const { context, useContext } = createContext<Dispatcher>();
-  const Provider = createProvider(context, dispatcher, models);
-  const useModel = createUseModel<M>(useContext);
-  const getModel = createGetModel<M>(dispatcher);
-  const withModel = createWithModel<M>(useModel);
+  const Provider = createProvider(context, dispatcher, hooks);
+  const useHooks = createUseHooks<H>(useContext);
+  const getHooks = createGetHooks<H>(dispatcher);
+  const withHooks = createWithHooks<H>(useHooks);
 
   return {
     Provider,
-    useModel,
-    getModel,
-    withModel,
+    useHooks,
+    getHooks,
+    withHooks,
   };
 };
 

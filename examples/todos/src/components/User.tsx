@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import store from '../store';
 
-const { useModel } = store;
+const { useHooks } = store;
 
 export default function UserApp() {
-  const [ state, actions ] = useModel('user');
+  const [ state, actions ] = useHooks('useUser');
   const { dataSource, auth, todos } = state;
   const { login } = actions;
   const { name } = dataSource;

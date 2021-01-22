@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import Dispatcher from './dispatcher';
-import { Models } from './types';
+import { Hooks } from './types';
 
-export default function<Ms extends Models = Models>(useContext) {
-  function useModel<K extends keyof Ms>(
+export default function<Ms extends Hooks = Hooks>(useContext) {
+  function useHooks<K extends keyof Ms>(
     namespace: K,
   ): ReturnType<Ms[K]> {
     const dispatcher = useContext() as Dispatcher;
@@ -28,5 +28,5 @@ export default function<Ms extends Models = Models>(useContext) {
     return state;
   }
 
-  return useModel;
+  return useHooks;
 }

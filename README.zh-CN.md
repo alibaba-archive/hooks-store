@@ -52,27 +52,27 @@ function useCounter() {
   };
 }
 
-const models = {
-  counter: useCounter,
+const hooks = {
+  useCounter
 };
 
-// 2️⃣ 创建 Stroe
-const store = createStore(models);
+// 2️⃣ 创建 Store
+const store = createStore(hooks);
 
 // 3️⃣ 消费模型
-const { useModel } = store;
+const { useHooks } = store;
 function Button() {
-  const { increment } = useModel('counter');
+  const { increment } = useHooks('useCounter');
   return (
     <button type="button" onClick={increment}> + </button>
   );
 }
 function Count() {
-  const { count } = useModel('counter');
+  const { count } = useHooks('useCounter');
   return (<span>{count}</span>);
 }
 
-// 4️⃣ 通过 Provider 绑定 Stroe 到视图
+// 4️⃣ 通过 Provider 绑定 Store 到视图
 const { Provider } = store;
 function App() {
   return (
@@ -101,13 +101,13 @@ npm install @ice/hooks-store --save
 
 在某些场景下，您可能只希望调用模型返回的方法更新状态而不订阅模型状态的更新。
 例如「快速开始」示例中的 Button 组件，您没有在组件中消费模型的状态，因此可能不期望模型状态的变化触发组件的重新渲染。
-这时候您可以使用 `getModel` API，看下面的示例，可以与上面的示例进行比较：
+这时候您可以使用 `getHooks` API，看下面的示例，可以与上面的示例进行比较：
 
 ```jsx
-const { getModel } = store;
+const { getHooks } = store;
 function Button() {
   function handleIncrement() {
-    getModel('counter').increment();
+    getHooks('useCounter').increment();
   }
   return (
     <button type="button" onClick={handleIncrement}> + </button>
@@ -115,14 +115,14 @@ function Button() {
 }
 ```
 
-### 模型联动
+### Hooks 联动
 
-在某些场景下，您可能期望 A 模型的某个状态的变更触发 B 模型某个状态的更新。我们把这种行为称为「模型联动」。
+在某些场景下，您可能期望 A Hooks 的某个状态的变更触发 B Hooks 某个状态的更新。我们把这种行为称为「Hooks 联动」。
 例如下面的场景：
 
-- 我们有一个 todos 模型，模型记录了所有的任务列表。
-- 我们有一个 user 模型，模型中有一个 todos 字段，记录了当前用户拥有的任务数。
-- 每当 todos 模型的任务列表发生了变更，用户持有的任务数就需要保持同步。
+- 我们有一个 useTodos，记录了所有的任务列表。
+- 我们有一个 useUser，该 hooks 返回一个 todos 字段，记录了当前用户拥有的任务数。
+- 每当 useTodos 的任务列表发生了变更，用户持有的任务数就需要保持同步。
 
 #### 方式一：状态订阅
 
@@ -133,7 +133,7 @@ import '@/store';
 
 function useUser() {
   const [state, setState] = useState({ todos: 0 });
-  const [todos] = store.useModel('todos');
+  const [todos] = store.useHooks('useTodos');
 
   useEffect(() => {
     setState(produce((draft) => {
@@ -162,7 +162,7 @@ function useTodos() {
   function setTodos(todos) {
     setState(todos);
 
-    const [, setUser] = store.getModel('user');
+    const [, setUser] = store.getHooks('useUser');
     setUser(produce((draft) => {
       draft.todos = todos.length;
     }));
@@ -179,19 +179,19 @@ function useTodos() {
 ```tsx
 import { Component } from 'react';
 import store from '@/store';
-import useTodos from '@/models/todos';
+import useTodos from '@/hooks/useTodos';
 
-const { withModel } = store;
+const { withHooks } = store;
 
-interface MapModelToProp {
-  todos: ReturnType<typeof useTodos>; // 这个字段是 withModel 自动添加的
+interface MaHooksToProp {
+  todos: ReturnType<typeof useTodos>; // 这个字段是 withHooks 自动添加的
 }
 
 interface CustomProp {
   title: string; // 用户自定义的 props
 }
 
-type Props = CustomProp & MapModelToProp;
+type Props = CustomProp & MaHooksToProp;
 
 class Todos extends Component<Props> {
   render() {
@@ -214,7 +214,7 @@ class Todos extends Component<Props> {
   }
 }
 
-export default withModel('todos')<MapModelToProp, Props>(Todos);
+export default withHooks('useTodos')<MaHooksToProp, Props>(Todos);
 ```
 
 ## 浏览器兼容

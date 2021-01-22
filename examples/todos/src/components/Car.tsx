@@ -1,10 +1,10 @@
 import React from 'react';
 import store from '../store';
 
-const { useModel } = store;
+const { useHooks } = store;
 
 export default function UserApp() {
-  const [ state ] = useModel('car');
+  const [ state ] = useHooks('useCar');
   const { logo } = state;
 
   console.debug('Car rending...');

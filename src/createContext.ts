@@ -1,23 +1,23 @@
 import { useContext, createContext, Context } from 'react';
 
-export interface UseIcestoreContext<T=any> {
+export interface UseHooksStoreContext<T=any> {
   (): T;
 }
 
-export interface IcestoreContextContent<T=any> {
+export interface HooksStoreContextContent<T=any> {
   context: Context<T>;
-  useContext: UseIcestoreContext<T>;
+  useContext: UseHooksStoreContext<T>;
 }
 
-export default function<T>(): IcestoreContextContent<T> {
-  const ReactIcestoreContext = createContext(null);
+export default function<T>(): HooksStoreContextContent<T> {
+  const ReactHooksStoreContext = createContext(null);
 
   if (process.env.NODE_ENV !== 'production') {
-    ReactIcestoreContext.displayName = 'ReactIcestore';
+    ReactHooksStoreContext.displayName = 'ReactHooksStore';
   }
 
-  const useIcestoreContext: UseIcestoreContext = function () {
-    const contextValue = useContext(ReactIcestoreContext);
+  const useHooksStoreContext: UseHooksStoreContext = function () {
+    const contextValue = useContext(ReactHooksStoreContext);
 
     if (process.env.NODE_ENV !== 'production' && !contextValue) {
       throw new Error(
@@ -29,7 +29,7 @@ export default function<T>(): IcestoreContextContent<T> {
   };
 
   return {
-    context: ReactIcestoreContext,
-    useContext: useIcestoreContext,
+    context: ReactHooksStoreContext,
+    useContext: useHooksStoreContext,
   };
 }

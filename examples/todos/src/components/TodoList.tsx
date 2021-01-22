@@ -1,7 +1,7 @@
 import React from 'react';
 import store from '../store';
 
-const { useModel } = store;
+const { useHooks } = store;
 
 export function TodoList({ state, actions, effectsState }) {
   const { title, subTitle, dataSource } = state;
@@ -37,7 +37,7 @@ export function TodoList({ state, actions, effectsState }) {
 }
 
 export default function({ title }) {
-  const [ state, actions, effectsState ] = useModel('todos');
+  const [ state, actions, effectsState ] = useHooks('todos');
   return TodoList(
     {
       state: { dataSource: state, title, subTitle: 'Function Component' },

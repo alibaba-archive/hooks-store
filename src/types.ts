@@ -1,6 +1,6 @@
 export type useValue =
   (...args: any) => any;
 
-export interface Models {
+export interface Hooks {
   [key: string]: useValue;
 }

@@ -20,18 +20,18 @@ function useCounter() {
   };
 }
 
-const models = {
-  counter: useCounter,
+const hooks = {
+  useCounter,
 };
 
 // 2️⃣ Create the store
-const store = createStore(models);
+const store = createStore(hooks);
 
-// 3️⃣ Consume model
-const { useModel, getModel } = store;
+// 3️⃣ Consume hooks
+const { useHooks, getHooks } = store;
 function Button() {
   function getCounter() {
-    return getModel('counter');
+    return getHooks('useCounter');
   }
   function handleDecrementAsync() {
     getCounter().decrementAsync();
@@ -49,7 +49,7 @@ function Button() {
   );
 }
 function Count() {
-  const { count } = useModel('counter');
+  const { count } = useHooks('useCounter');
 
   console.log('Render Count.');
   return (<span>{count}</span>);

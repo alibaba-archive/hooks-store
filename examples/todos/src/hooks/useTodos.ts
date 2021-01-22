@@ -19,7 +19,7 @@ export default function useTodos() {
   ]);
 
   function getUserActions() {
-    const [, actions] = store.getModel('user');
+    const [, actions] = store.getHooks('user');
     return actions;
   }
 

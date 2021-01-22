@@ -1,14 +1,14 @@
 import React, { Context } from 'react';
 import Executor from './executor';
 import Dispatcher from './dispatcher';
-import { Models } from './types';
+import { Hooks } from './types';
 
-export default function(context: Context<Dispatcher>, dispatcher: Dispatcher, models: Models) {
+export default function(context: Context<Dispatcher>, dispatcher: Dispatcher, hooks: Hooks) {
   return ({ children }: { children: React.ReactNode }) => {
     return (
       <context.Provider value={dispatcher}>
-        {Object.keys(models).map(namespace => {
-          const useValue = models[namespace];
+        {Object.keys(hooks).map(namespace => {
+          const useValue = hooks[namespace];
           return (
             <Executor
               key={namespace}
