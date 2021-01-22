@@ -31,7 +31,7 @@
 
 * **最小和熟悉的 API**: 没有额外的学习成本，只需要了解 React Hooks；
 * **中心化**: 很方便地进行数据初始化和状态联动；
-* **状态只读 API**: 支持只读模型的状态而不订阅状态的更新；
+* **状态只读 API**: 支持只读状态而不订阅状态的更新；
 * **良好的兼容性**: 类组件兼容和良好的 TypeScript 类型检查和推断。
 
 ## 快速开始
@@ -41,7 +41,7 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { createStore } from '@ice/hooks-store';
 
-// 1️⃣ 通过自定义 Hooks 定义模型
+// 1️⃣ 自定义 Hooks
 function useCounter() {
   const [count, setCount] = useState(0);
   const increment = () => setCount(count + 1);
@@ -59,7 +59,7 @@ const hooks = {
 // 2️⃣ 创建 Store
 const store = createStore(hooks);
 
-// 3️⃣ 消费模型
+// 3️⃣ 消费 Hooks
 const { useHooks } = store;
 function Button() {
   const { increment } = useHooks('useCounter');
@@ -99,8 +99,8 @@ npm install @ice/hooks-store --save
 
 ### 只读不订阅更新
 
-在某些场景下，您可能只希望调用模型返回的方法更新状态而不订阅模型状态的更新。
-例如「快速开始」示例中的 Button 组件，您没有在组件中消费模型的状态，因此可能不期望模型状态的变化触发组件的重新渲染。
+在某些场景下，您可能只希望调用 Hooks 返回的方法更新状态而不订阅 Hooks 状态的更新。
+例如「快速开始」示例中的 Button 组件，您没有在组件中消费 Hooks 的状态，因此可能不期望 Hooks 状态的变化触发组件的重新渲染。
 这时候您可以使用 `getHooks` API，看下面的示例，可以与上面的示例进行比较：
 
 ```jsx
@@ -174,7 +174,7 @@ function useTodos() {
 
 ### 在类组件中使用
 
-虽然模型是通过自定义 Hooks 定义的，但您仍然可以在类组件中获取和订阅模型：
+您仍然可以在类组件中获取和订阅 Hooks：
 
 ```tsx
 import { Component } from 'react';
