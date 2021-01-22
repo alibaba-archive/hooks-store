@@ -184,7 +184,7 @@ import useTodos from '@/hooks/useTodos';
 const { withHooks } = store;
 
 interface MaHooksToProp {
-  todos: ReturnType<typeof useTodos>; // 这个字段是 withHooks 自动添加的
+  useTodos: ReturnType<typeof useTodos>; // 这个字段是 withHooks 自动添加的
 }
 
 interface CustomProp {
@@ -195,8 +195,8 @@ type Props = CustomProp & MaHooksToProp;
 
 class Todos extends Component<Props> {
   render() {
-    const { title, todos } = this.props;
-    const [ state, actions ] = todos;
+    const { title, useTodos } = this.props;
+    const [ state, actions ] = useTodos;
     return (
       <div>
         {

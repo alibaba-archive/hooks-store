@@ -37,7 +37,7 @@ export function TodoList({ state, actions, effectsState }) {
 }
 
 export default function({ title }) {
-  const [ state, actions, effectsState ] = useHooks('todos');
+  const [ state, actions, effectsState ] = useHooks('useTodos');
   return TodoList(
     {
       state: { dataSource: state, title, subTitle: 'Function Component' },

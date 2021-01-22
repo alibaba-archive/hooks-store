@@ -184,7 +184,7 @@ import useTodos from '@/hooks/useTodos';
 const { withHooks } = store;
 
 interface MapHooksToProp {
-  todos: ReturnType<typeof useTodos>; // This field is automatically added by withHooks
+  useTodos: ReturnType<typeof useTodos>; // This field is automatically added by withHooks
 }
 
 interface CustomProp {
@@ -195,8 +195,8 @@ type Props = CustomProp & MapHooksToProp;
 
 class Todos extends Component<Props> {
   render() {
-    const { title, todos } = this.props;
-    const [ state, actions ] = todos;
+    const { title, useTodos } = this.props;
+    const [ state, actions ] = useTodos;
     return (
       <div>
         {

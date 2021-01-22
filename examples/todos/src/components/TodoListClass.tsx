@@ -6,7 +6,7 @@ import useTodos from '../hooks/useTodos';
 const { withHooks } = store;
 
 interface MapHooksToProp {
-  todos: ReturnType<typeof useTodos>;
+  useTodos: ReturnType<typeof useTodos>;
 }
 
 interface CustomProp {
@@ -17,18 +17,18 @@ type Props = CustomProp & MapHooksToProp;
 
 class TodoList extends Component<Props> {
   onRemove = (index) => {
-    const [, actions] = this.props.todos;
+    const [, actions] = this.props.useTodos;
     actions.remove(index);
   }
 
   onToggle = (index) => {
-    const [, actions] = this.props.todos;
+    const [, actions] = this.props.useTodos;
     actions.toggle(index);
   }
 
   render() {
-    const { title, todos } = this.props;
-    const [ state, , effectsState ] = todos;
+    const { title, useTodos } = this.props;
+    const [ state, , effectsState ] = useTodos;
     return TodoListFn({
       state: { title, dataSource: state, subTitle: 'Class Component' },
       actions: { toggle: this.onToggle, remove: this.onRemove },

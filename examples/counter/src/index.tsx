@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { createStore } from '@ice/hooks-store';
 
-const delay = (time) => new Promise((resolve) => setTimeout(() => resolve(), time));
+const delay = (time) => new Promise((resolve) => setTimeout(() => resolve(true), time));
 
 // 1️⃣ Create a custom hook as usual
 function useCounter() {

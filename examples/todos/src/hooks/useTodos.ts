@@ -19,7 +19,7 @@ export default function useTodos() {
   ]);
 
   function getUserActions() {
-    const [, actions] = store.getHooks('user');
+    const [, actions] = store.getHooks('useUser');
     return actions;
   }
 
