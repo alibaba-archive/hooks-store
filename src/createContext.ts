@@ -21,7 +21,7 @@ export default function<T>(): IcestoreContextContent<T> {
 
     if (process.env.NODE_ENV !== 'production' && !contextValue) {
       throw new Error(
-        'could not find icestore-next context value; please ensure the component is wrapped in a <Provider>',
+        'could not find hooks-store context value; please ensure the component is wrapped in a <Provider>',
       );
     }
 

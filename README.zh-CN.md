@@ -1,17 +1,15 @@
 [English](./README.md) | 简体中文
 
-> 注意：icestore-next 依然处于实验阶段，请不要将它应用于生产环境！！！
-
-# icestore-next
+# hooks-store
 
 > 基于 React Hooks 的轻量级状态管理框架。
 
-[![NPM version](https://img.shields.io/npm/v/@ice/store-next.svg?style=flat)](https://npmjs.org/package/@ice/store-next)
-[![Package Quality](https://npm.packagequality.com/shield/@ice%2Fstore.svg)](https://packagequality.com/#?package=@ice/store-next)
-[![build status](https://img.shields.io/travis/ice-lab/icestore-next.svg?style=flat-square)](https://travis-ci.org/ice-lab/icestore-next)
-[![NPM downloads](http://img.shields.io/npm/dm/@ice/store-next.svg?style=flat)](https://npmjs.org/package/@ice/store-next)
-[![Known Vulnerabilities](https://snyk.io/test/npm/@ice/store-next/badge.svg)](https://snyk.io/test/npm/@ice/store-next)
-[![David deps](https://img.shields.io/david/ice-lab/icestore-next.svg?style=flat-square)](https://david-dm.org/ice-lab/icestore-next)
+[![NPM version](https://img.shields.io/npm/v/@ice/hooks-store.svg?style=flat)](https://npmjs.org/package/@ice/hooks-store)
+[![Package Quality](https://npm.packagequality.com/shield/@ice%2Fstore.svg)](https://packagequality.com/#?package=@ice/hooks-store)
+[![build status](https://img.shields.io/travis/ice-lab/hooks-store.svg?style=flat-square)](https://travis-ci.org/ice-lab/hooks-store)
+[![NPM downloads](http://img.shields.io/npm/dm/@ice/hooks-store.svg?style=flat)](https://npmjs.org/package/@ice/hooks-store)
+[![Known Vulnerabilities](https://snyk.io/test/npm/@ice/hooks-store/badge.svg)](https://snyk.io/test/npm/@ice/hooks-store)
+[![David deps](https://img.shields.io/david/ice-lab/hooks-store.svg?style=flat-square)](https://david-dm.org/ice-lab/hooks-store)
 
 <table>
   <thead>
@@ -21,15 +19,15 @@
   </thead>
   <tbody>
     <tr>
-      <td><a href="https://codesandbox.io/s/github/ice-lab/icestore-next/tree/master/examples/counter?module=/src/index.tsx">Counter</a></td>
-      <td><a href="https://codesandbox.io/s/github/ice-lab/icestore-next/tree/master/examples/todos?module=/src/index.tsx">Todos</a></td>
+      <td><a href="https://codesandbox.io/s/github/ice-lab/hooks-store/tree/master/examples/counter?module=/src/index.tsx">Counter</a></td>
+      <td><a href="https://codesandbox.io/s/github/ice-lab/hooks-store/tree/master/examples/todos?module=/src/index.tsx">Todos</a></td>
     </tr>
   </tbody>
 </table>
 
 ## 简介
 
-`icestore-next` 是基于 React Hooks 实现的轻量级状态管理框架，具有以下特征：
+`hooks-store` 是基于 React Hooks 实现的轻量级状态管理框架，具有以下特征：
 
 * **最小和熟悉的 API**: 没有额外的学习成本，只需要了解 React Hooks；
 * **中心化**: 很方便地进行数据初始化和状态联动；
@@ -41,7 +39,7 @@
 ```jsx
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from '@ice/store-next';
+import { createStore } from '@ice/hooks-store';
 
 // 1️⃣ 通过自定义 Hooks 定义模型
 function useCounter() {
@@ -91,10 +89,10 @@ ReactDOM.render(<App />, rootElement);
 
 ## 安装
 
-使用 icestore 需要 React 在 16.8.0 版本以上。
+使用 @ice/hooks-store 需要 React 在 16.8.0 版本以上。
 
 ```bash
-npm install @ice/store-next --save
+npm install @ice/hooks-store --save
 ```
 
 ## 进阶用法
@@ -229,7 +227,7 @@ export default withModel('todos')<MapModelToProp, Props>(Todos);
 
 欢迎通过 [issue](https://github.com/alibaba/ice/issues/new) 反馈问题。
 
-如果对 `icestore` 感兴趣，请参考 [CONTRIBUTING.md](https://github.com/alibaba/ice/blob/master/.github/CONTRIBUTING.md) 学习如何贡献代码。
+如果对 `@ice/hooks-store` 感兴趣，请参考 [CONTRIBUTING.md](https://github.com/alibaba/ice/blob/master/.github/CONTRIBUTING.md) 学习如何贡献代码。
 
 ## 社区
 

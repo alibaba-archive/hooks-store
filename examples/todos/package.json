@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "@ice/store-next": "^0.1.0",
+    "@ice/hooks-store": "^0.1.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-use": "^13.27.0"

@@ -1,5 +1,5 @@
 {
-  "name": "@ice/store-next",
+  "name": "@ice/hooks-store",
   "version": "0.1.0",
   "description": "Lightweight React state management library based on React Hooks.",
   "main": "lib/index.js",
@@ -9,7 +9,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ice-lab/icestore-next.git"
+    "url": "git+https://github.com/ice-lab/hooks-store.git"
   },
   "keywords": [
     "hooks",
@@ -17,9 +17,9 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ice-lab/icestore-next/issues"
+    "url": "https://github.com/ice-lab/hooks-store/issues"
   },
-  "homepage": "https://github.com/ice-lab/icestore-next",
+  "homepage": "https://github.com/ice-lab/hooks-store",
   "husky": {
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"

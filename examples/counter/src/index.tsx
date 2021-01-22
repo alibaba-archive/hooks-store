@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from '@ice/store-next';
+import { createStore } from '@ice/hooks-store';
 
 const delay = (time) => new Promise((resolve) => setTimeout(() => resolve(), time));
 
