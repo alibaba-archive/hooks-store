@@ -14,6 +14,7 @@ function App() {
       <Todos />
       <TodoAdd />
       <User />
+      <Car />
     </Provider>
   );
 }
