@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import store from '../store';
 import { TodoList as TodoListFn } from './TodoList';
-import type useTodos from '../hooks/useTodos';
+import type useTodos from '../models/useTodos';
 
 const { withHook } = store;
 
