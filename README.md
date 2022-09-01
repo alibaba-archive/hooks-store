@@ -60,15 +60,15 @@ const hooks = {
 const store = createStore(hooks);
 
 // 3️⃣ Consume hooks
-const { useHooks } = store;
+const { useHook } = store;
 function Button() {
-  const { increment } = useHooks('useCounter');
+  const { increment } = useHook('useCounter');
   return (
     <button type="button" onClick={increment}> + </button>
   );
 }
 function Count() {
-  const { count } = useHooks('useCounter');
+  const { count } = useHook('useCounter');
   return (<span>{count}</span>);
 }
 
@@ -102,13 +102,13 @@ npm install @ice/hooks-store --save
 In some scenarios, you may only want to call the method returned by the hooks to update the state instead of subscribing to the update of the hooks state.
 For example, the button component in the "Basic example", you do not consume the state of the hooks in the component, so you may not expect the change of the state of the hooks to trigger the re-render of the component.
 
-At this time, you can use the `getHooks` API, check following example and compare them with the above example:
+At this time, you can use the `getHook` API, check following example and compare them with the above example:
 
 ```jsx
-const { getHooks } = store;
+const { getHook } = store;
 function Button() {
   function handleIncrement() {
-    getHooks('useCounter').increment();
+    getHook('useCounter').increment();
   }
   return (
     <button type="button" onClick={handleIncrement}> + </button>
@@ -135,7 +135,7 @@ import '@/store';
 
 function useUser() {
   const [state, setState] = useState({ todos: 0 });
-  const [todos] = store.useHooks('useTodos');
+  const [todos] = store.useHook('useTodos');
 
   useEffect(() => {
     setState(produce((draft) => {
@@ -164,7 +164,7 @@ function useTodos() {
   function setTodos(todos) {
     setState(todos);
 
-    const [, setUser] = store.getHooks('useUser');
+    const [, setUser] = store.getHook('useUser');
     setUser(produce((draft) => {
       draft.todos = todos.length;
     }));
@@ -181,10 +181,10 @@ import { Component } from 'react';
 import store from '@/store';
 import useTodos from '@/hooks/useTodos';
 
-const { withHooks } = store;
+const { withHook } = store;
 
 interface MapHooksToProp {
-  useTodos: ReturnType<typeof useTodos>; // This field is automatically added by withHooks
+  useTodos: ReturnType<typeof useTodos>; // This field is automatically added by withHook
 }
 
 interface CustomProp {
@@ -214,7 +214,7 @@ class Todos extends Component<Props> {
   }
 }
 
-export default withHooks('useTodos')<MapHooksToProp, Props>(Todos);
+export default withHook('useTodos')<MapHooksToProp, Props>(Todos);
 ```
 
 ## Browser Compatibility
