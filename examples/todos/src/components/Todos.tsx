@@ -3,10 +3,10 @@ import store from '../store';
 import TodoList from './TodoListClass';
 // import TodoList from './TodoList';
 
-const { useHooks } = store;
+const { useHook } = store;
 
 export default function Todos() {
-  const [ dataSource, actions, effectsState ] = useHooks('useTodos');
+  const [dataSource, actions, effectsState] = useHook('useTodos');
   const { refresh } = actions;
 
   useEffect(() => {
@@ -17,6 +17,5 @@ export default function Todos() {
   const loadingView = <div>loading...</div>;
   const taskView = dataSource.length ? <TodoList title="Todos" /> : noTaskView;
 
-  console.debug('Todos rending... ');
-  return effectsState.refresh.loading? loadingView : taskView;
+  return effectsState.refresh.loading ? loadingView : taskView;
 }

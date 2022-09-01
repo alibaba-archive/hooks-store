@@ -4,6 +4,5 @@
 import { useState } from 'react';
 
 export default function useCar() {
-  console.log('useCar');
   return useState({ logo: 'string' });
-};
+}

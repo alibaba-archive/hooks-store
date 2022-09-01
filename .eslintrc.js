@@ -1,18 +1,9 @@
-const { tslint, deepmerge } = require('@ice/spec');
+const { getESLintConfig } = require('@iceworks/spec');
 
-module.exports = deepmerge(tslint, {
-  env: {
-    jest: true
-  },
+module.exports = getESLintConfig('react-ts', {
   rules: {
-    "@typescript-eslint/explicit-member-accessibility": "off",
-    "@typescript-eslint/explicit-function-return-type": "off",
-    "@typescript-eslint/interface-name-prefix": 1,
-  },
-  settings: {
-    "react": {
-      "pragma": "React",
-      "version": "detect"
-    }
+    'react-hooks/exhaustive-deps': 0,
+    'no-param-reassign': 0,
+    '@typescript-eslint/member-ordering': 0,
   },
 });

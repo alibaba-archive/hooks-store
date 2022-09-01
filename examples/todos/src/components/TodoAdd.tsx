@@ -1,15 +1,14 @@
 import React from 'react';
 import store from '../store';
 
-const { getHooks } = store;
+const { getHook } = store;
 
 export default function TodoAdd() {
-  console.debug('TodoAdd rending...');
   return (
     <input
       onKeyDown={(event) => {
         if (event.keyCode === 13) {
-          const [, { add }] = getHooks('useTodos');
+          const [, { add }] = getHook('useTodos');
           add({
             name: event.currentTarget.value,
           });

@@ -61,7 +61,7 @@ typings/
 .next
 
 # Compile directory
-lib
+esm
 
 package-lock.json
 
