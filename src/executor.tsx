@@ -6,7 +6,7 @@ interface ExecutorProps {
   namespace: string;
 }
 
-export default function(props: ExecutorProps) {
+export default function (props: ExecutorProps) {
   const { useValue, onUpdate, namespace } = props;
 
   const updateRef = useRef(onUpdate);
@@ -17,13 +17,13 @@ export default function(props: ExecutorProps) {
   try {
     data = useValue();
   } catch (e) {
-    console.error(`Invoking '${namespace || 'unknown'}' hooks failed:`, e);
+    console.error(`Invoking '${namespace || 'unknown'}' hook failed:`, e);
   }
 
   useMemo(() => {
     updateRef.current(data);
     initialLoad.current = false;
-  }, []);
+  }, [data]);
 
   useEffect(() => {
     if (initialLoad.current) {
@@ -34,4 +34,4 @@ export default function(props: ExecutorProps) {
   });
 
   return null;
-};
+}
