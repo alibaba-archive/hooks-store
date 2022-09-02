@@ -23,7 +23,7 @@ export default function (props: ExecutorProps) {
   useMemo(() => {
     updateRef.current(data);
     initialLoad.current = false;
-  }, [data]);
+  }, []);
 
   useEffect(() => {
     if (initialLoad.current) {
