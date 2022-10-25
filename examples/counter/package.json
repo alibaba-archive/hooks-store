@@ -1,8 +1,17 @@
 {
   "name": "counter",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "@ice/hooks-store": "../../"
+  },
+  "devDependencies": {
+    "react-scripts": "^5.0.0",
+    "typescript": "^4.0.0"
+  },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build"
+    "start": "DISABLE_ESLINT_PLUGIN=true react-scripts start",
+    "build": "DISABLE_ESLINT_PLUGIN=true react-scripts build"
   },
   "browserslist": {
     "production": [

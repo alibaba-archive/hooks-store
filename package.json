@@ -48,8 +48,6 @@
     "jest": "^26.0.0",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
-    "react-scripts": "^4.0.0",
-    "react-use": "^13.27.0",
     "ts-jest": "^26.0.0",
     "typescript": "^4.8.2"
   },

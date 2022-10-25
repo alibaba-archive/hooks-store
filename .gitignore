@@ -66,3 +66,4 @@ esm
 package-lock.json
 
 yarn.lock
+examples/*/pnpm-lock.yaml
