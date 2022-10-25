@@ -1,7 +1,7 @@
 import React from 'react';
 import store from '../store';
 
-const { useHooks } = store;
+const { useHook } = store;
 
 export function TodoList({ state, actions, effectsState }) {
   const { title, subTitle, dataSource } = state;
@@ -15,7 +15,7 @@ export function TodoList({ state, actions, effectsState }) {
       </p>
       <ul>
         {dataSource.map(({ name, done = false }, index) => (
-          <li key={index}>
+          <li key={name}>
             <label>
               <input
                 type="checkbox"
@@ -36,8 +36,8 @@ export function TodoList({ state, actions, effectsState }) {
   );
 }
 
-export default function({ title }) {
-  const [ state, actions, effectsState ] = useHooks('useTodos');
+export default function ({ title }) {
+  const [state, actions, effectsState] = useHook('useTodos');
   return TodoList(
     {
       state: { dataSource: state, title, subTitle: 'Function Component' },

@@ -12,19 +12,19 @@ export default function useUser() {
   });
 
   function setTodos(todos: number) {
-    setUser(prevState => {
+    setUser((prevState) => {
       return { ...prevState, todos };
     });
   }
 
-  const [loginState, login] = useAsyncFn(async function() {
+  const [loginState, login] = useAsyncFn(async () => {
     await delay(1000);
     const dataSource = {
       name: 'Alvin',
     };
     const auth = true;
 
-    setUser(prevState => {
+    setUser((prevState) => {
       return { ...prevState, dataSource, auth };
     });
   });
@@ -39,4 +39,4 @@ export default function useUser() {
       login: loginState,
     },
   ] as const;
-};
+}

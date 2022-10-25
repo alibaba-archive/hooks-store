@@ -28,10 +28,10 @@ const hooks = {
 const store = createStore(hooks);
 
 // 3️⃣ Consume hooks
-const { useHooks, getHooks } = store;
+const { useHook, getHook } = store;
 function Button() {
   function getCounter() {
-    return getHooks('useCounter');
+    return getHook('useCounter');
   }
   function handleDecrementAsync() {
     getCounter().decrementAsync();
@@ -40,18 +40,16 @@ function Button() {
     getCounter().decrement();
   }
 
-  console.log('Render Button.');
   return (
     <>
-      <button type="button" onClick={handleDecrement}>-</button>
-      <button type="button" onClick={handleDecrementAsync}>Async-</button>
+      <button type="button" onClick={() => handleDecrement()}>-</button>
+      <button type="button" onClick={() => handleDecrementAsync()}>Async-</button>
     </>
   );
 }
 function Count() {
-  const { count } = useHooks('useCounter');
+  const { count } = useHook('useCounter');
 
-  console.log('Render Count.');
   return (<span>{count}</span>);
 }
 

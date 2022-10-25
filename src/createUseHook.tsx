@@ -1,11 +1,9 @@
 import { useState, useEffect } from 'react';
 import Dispatcher from './dispatcher';
-import { Hooks } from './types';
+import type { Hooks } from './types';
 
-export default function<Ms extends Hooks = Hooks>(useContext) {
-  function useHooks<K extends keyof Ms>(
-    namespace: K,
-  ): ReturnType<Ms[K]> {
+export default function createUseHook<Ms extends Hooks = Hooks>(useContext) {
+  function useHook<K extends keyof Ms>(namespace: K): ReturnType<Ms[K]> {
     const dispatcher = useContext() as Dispatcher;
     const data = dispatcher.data[namespace];
     if (!dispatcher.callbacks[namespace]) {
@@ -28,5 +26,5 @@ export default function<Ms extends Hooks = Hooks>(useContext) {
     return state;
   }
 
-  return useHooks;
+  return useHook;
 }

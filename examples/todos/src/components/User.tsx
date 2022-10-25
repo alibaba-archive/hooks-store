@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import store from '../store';
 
-const { useHooks } = store;
+const { useHook } = store;
 
 export default function UserApp() {
-  const [ state, actions ] = useHooks('useUser');
+  const [state, actions] = useHook('useUser');
   const { dataSource, auth, todos } = state;
   const { login } = actions;
   const { name } = dataSource;
@@ -13,9 +13,8 @@ export default function UserApp() {
     login();
   }, []);
 
-  console.debug('UserApp rending...');
-  return auth ?
-    (<div>
+  return auth ? (
+    <div>
       <h2>
         User Information
       </h2>
@@ -23,8 +22,10 @@ export default function UserApp() {
         <li>Name：{name}</li>
         <li>Todos：{todos}</li>
       </ul>
-    </div>) :
-    (<div>
+    </div>
+  ) : (
+    <div>
       Not logged in
-    </div>);
+    </div>
+  );
 }

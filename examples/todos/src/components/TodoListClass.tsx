@@ -1,9 +1,9 @@
 import { Component } from 'react';
 import store from '../store';
 import { TodoList as TodoListFn } from './TodoList';
-import useTodos from '../hooks/useTodos';
+import type useTodos from '../models/useTodos';
 
-const { withHooks } = store;
+const { withHook } = store;
 
 interface MapHooksToProp {
   useTodos: ReturnType<typeof useTodos>;
@@ -15,20 +15,21 @@ interface CustomProp {
 
 type Props = CustomProp & MapHooksToProp;
 
+// eslint-disable-next-line
 class TodoList extends Component<Props> {
   onRemove = (index) => {
     const [, actions] = this.props.useTodos;
     actions.remove(index);
-  }
+  };
 
   onToggle = (index) => {
     const [, actions] = this.props.useTodos;
     actions.toggle(index);
-  }
+  };
 
   render() {
     const { title, useTodos } = this.props;
-    const [ state, , effectsState ] = useTodos;
+    const [state, , effectsState] = useTodos;
     return TodoListFn({
       state: { title, dataSource: state, subTitle: 'Class Component' },
       actions: { toggle: this.onToggle, remove: this.onRemove },
@@ -37,4 +38,4 @@ class TodoList extends Component<Props> {
   }
 }
 
-export default withHooks('useTodos')<MapHooksToProp, Props>(TodoList);
+export default withHook('useTodos')<MapHooksToProp, Props>(TodoList);

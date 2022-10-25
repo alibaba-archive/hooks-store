@@ -19,12 +19,12 @@ export default function useTodos() {
   ]);
 
   function getUserActions() {
-    const [, actions] = store.getHooks('useUser');
+    const [, actions] = store.getHook('useUser');
     return actions;
   }
 
   function toggle(index: number) {
-    setTodos(prevState => {
+    setTodos((prevState) => {
       const dataSource = ([] as any).concat(prevState);
       dataSource[index].done = !prevState[index].done;
       return dataSource;
@@ -39,7 +39,7 @@ export default function useTodos() {
     setTodos(dataSource);
   }
 
-  const [refreshState, refresh] = useAsyncFn(async function() {
+  const [refreshState, refresh] = useAsyncFn(async () => {
     await delay(2000);
 
     const dataSource = [
@@ -58,7 +58,7 @@ export default function useTodos() {
     setTodos(dataSource);
   }, [setTodos]);
 
-  const [removeState, remove] = useAsyncFn(async function(index: number) {
+  const [removeState, remove] = useAsyncFn(async (index: number) => {
     await delay(1000);
     const dataSource = ([] as any).concat(todos);
     dataSource.splice(index, 1);
@@ -80,4 +80,4 @@ export default function useTodos() {
       remove: removeState,
     },
   ] as const;
-};
+}
